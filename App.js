@@ -1,12 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View , ScrollView, TextInput} from 'react-native';
+import Constants from 'expo-constants';
+import contactosLista from './contactos'
+import ContactosMap from './components/contactos-map'
+import ContactosFlat from './components/contactos-flatlist'
+import ContactosSectionList from './components/contactos-sectionlist'
+import AgregarContacto from './components/agregar-contacto'
 
 export default function App() {
+
+
+  const [contactos, setContactos] = useState(contactosLista)
+  
+  const agregarContactos = (contacto) => {
+    console.log("Agregar:" , contacto)
+    setContactos([...contactos, contacto])
+  }
+
+  console.log("Constants", Constants)
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <AgregarContacto agregar={agregarContactos}/>
+      <ContactosSectionList contactos={contactos}/>
     </View>
   );
 }
@@ -15,7 +31,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: Constants.statusBarHeight,
+    //alignItems: 'center',
+    //justifyContent: 'center',
   },
 });
